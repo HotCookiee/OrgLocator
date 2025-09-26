@@ -1,5 +1,6 @@
 {
   "cSpell.words": [
+    "Эндпоинты",
     "buildings",
     "Declarative",
     "depends",
@@ -8,13 +9,17 @@
     "drop",
     "generated",
     "latitude",
+    "liveness",
     "longitude",
     "Mapped",
     "pkey",
     "please",
     "populates",
+    "readiness",
+    "redoc",
     "relationship",
     "Revises"
   ],
-  "cSpell.language": "ru"
+  "cSpell.language": "ru",
+  "commentTranslate.multiLineMerge": true
 }

@@ -1,3 +1,6 @@
+import sys
+from pathlib import Path
+
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
@@ -6,9 +9,8 @@ from sqlalchemy import pool
 from alembic import context
 
 from src.core import DATABASE_URL
-from src.db.tables import Organizations
-from src.db.tables import BASE
-
+from src.models.activities import Activities
+from src.models.base import BASE
 
 config = context.config
 
@@ -19,9 +21,6 @@ config.set_main_option("sqlalchemy.url",DATABASE_URL + "?async_fallback=True")
 
 
 target_metadata = BASE.metadata
-
-
-
 
 
 
