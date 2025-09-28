@@ -18,7 +18,9 @@
     "readiness",
     "redoc",
     "relationship",
-    "Revises"
+    "Revises",
+    "scalars",
+    "sessionmaker"
   ],
   "cSpell.language": "ru",
   "commentTranslate.multiLineMerge": true
