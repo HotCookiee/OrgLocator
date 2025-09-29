@@ -13,12 +13,18 @@ from repositories.service import check_the_database_for_life
 from repositories.tools import get_objects_from_database
 from repositories.buildings import get_list_organization_by_building
 from repositories.activities import get_list_organization_by_activity
+from repositories.organizations import GetInfoFromOrganization
+
+
 from models import * 
 
 
 from schemas.activity import Activity
 from schemas.building import Building  
 from schemas.organization import Organization  
+
+from services.organizations import CoordinateScope
+
 
 
 
@@ -126,15 +132,21 @@ def delete_activity(activity_id: str):
           tags          = ["🔍 Поиск по различным критериям:"],
           openapi_extra = {"descriptions_tag": "selection_by_filter"},
           description   = selection_by_filter_dcp.ORG_SEARCH_GEO.value)
-async def get_organization_using_a_filter():
-    return {"message": "Hello World"}
+async def get_organization_using_a_filter(latitude: float, longitude: float,  radius: int | None = None,
+                                        min_lat: float | None = None, max_lat: float | None = None,
+                                        min_lon: float | None = None, max_lon: float | None = None):
+        
+        return await CoordinateScope.search_organizations_by_geo(latitude, longitude, radius,
+                                                                  min_lat, max_lat, min_lon, max_lon)
 
 @app.get("/organizations/search/name/{name}",
          tags          = ["🔍 Поиск по различным критериям:"],
          openapi_extra = {"descriptions_tag": "selection_by_filter"},
          description   = selection_by_filter_dcp.ORG_SEARCH_NAME.value)
-async def get_organization_by_name(name: str):
-    return {"message": "Hello World"}
+async def get_organization_by_name(name_organization: str):
+
+    return await GetInfoFromOrganization.get_info_organization_by_name(name_organization)
+
 
 
 

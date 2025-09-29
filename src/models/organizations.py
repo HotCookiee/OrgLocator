@@ -17,6 +17,7 @@ class Organizations(BASE):
 
     id            : Mapped[str]   = mapped_column(UUID(as_uuid=True), primary_key=True)
     building_id   : Mapped[str]   = mapped_column(ForeignKey("buildings.id"), nullable=False)
+    name          : Mapped[str] = mapped_column(nullable=False)
     activity_id   : Mapped[str]   = mapped_column(ForeignKey("activities.id"),nullable=False)
     created_at    : Mapped[date]  = mapped_column(nullable=False)
 

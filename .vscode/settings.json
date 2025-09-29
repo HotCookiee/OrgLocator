@@ -1,7 +1,10 @@
 {
   "cSpell.words": [
-    "Эндпоинты",
+    "Эндпоинты", 
+    "between",
     "buildings",
+    "calculate",
+    "Coordinate",
     "Declarative",
     "depends",
     "dotenv",
@@ -20,6 +23,8 @@
     "relationship",
     "Revises",
     "scalars",
+    "selectinload",
+    "selectload",
     "sessionmaker"
   ],
   "cSpell.language": "ru",
