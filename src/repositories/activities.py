@@ -11,4 +11,3 @@ async def get_list_organization_by_activity(activity_id: str):
 
 
 
-        

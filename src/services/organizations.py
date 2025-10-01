@@ -42,7 +42,7 @@ class CoordinateScope():
         search_range:tuple[float,float,float,float] = (..., ..., ..., ...)
 
         if radius is not None and (min_lat is not None or max_lat is not None or min_lon is not None or max_lon is not None):
-            return {"Message":"error"}
+            return {"code:":"500","Message":"error"}
 
         elif radius is not None:
             search_range = await CoordinateScope(latitude, longitude,  radius).calculate_search_area()

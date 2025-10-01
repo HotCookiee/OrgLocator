@@ -21,7 +21,7 @@ class Database:
     def get_session(self) -> AsyncSession:
         return self.session_factory()
     
-    
+
     async def is_alive(self)->bool:
         if self._instance is not None:
             try:

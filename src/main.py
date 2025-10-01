@@ -10,7 +10,7 @@ from description.selection_by_filter import HealthDescription as selection_by_fi
 
 
 from repositories.service import check_the_database_for_life
-from repositories.tools import get_objects_from_database
+from repositories.tools import get_objects_from_database, add_object_to_the_database,del_object_to_the_database
 from repositories.buildings import get_list_organization_by_building
 from repositories.activities import get_list_organization_by_activity
 from repositories.organizations import GetInfoFromOrganization
@@ -18,13 +18,12 @@ from repositories.organizations import GetInfoFromOrganization
 
 from models import * 
 
+from schemas.activity import AddActivity 
+from schemas.building import AddBuilding  
+from schemas.organization import AddOrganization 
 
-from schemas.activity import Activity
-from schemas.building import Building  
-from schemas.organization import Organization  
 
 from services.organizations import CoordinateScope
-
 
 
 
@@ -34,6 +33,8 @@ app = FastAPI(
     redoc_url= "/redoc",
     title="GeoOrg"
 )
+
+
 
 
 @app.get("/health/liveness",
@@ -83,46 +84,50 @@ async def get_list_organization_from_activity(activity_id: str):
           tags          = ["🏢 Работа с организациями:"],
           openapi_extra={"descriptions_tag": "organization"},
           description   = organization_dcp.ORG_CREATE.value)
-def create_organization(activity_schema: Activity):
-    return {"message": "Hello World"}
+async def create_organization(activity_schema: AddActivity):
+    data = lambda model_object,schema_object:  model_object(**schema_object.dict())
+    return await add_object_to_the_database(data(Activities,activity_schema))
+
 
 
 @app.post("/buildings/create/",
           tags          = ["🏢 Работа с организациями:"],
           openapi_extra={"descriptions_tag": "organization"},
           description   = organization_dcp.BYL_CREATE.value)
-def create_build(build_schema: Building):
-    return {"message": "Hello World"}
+async def create_build(build_schema: AddBuilding):
+    data = lambda model_object,schema_object:  model_object(**schema_object.dict())
+    return await add_object_to_the_database(data(Buildings,build_schema))
 
 
 @app.post("/organizations/create/",
           tags          = ["🏢 Работа с организациями:"],
           openapi_extra={"descriptions_tag": "organization"},
           description   = organization_dcp.ACT_CREATE.value)
-def create_activity(organization_schema: Organization):
-    return {"message": "Hello World"}
+async def create_activity(organization_schema: AddOrganization):
+    data = lambda model_object,schema_object:  model_object(**schema_object.dict())
+    return await add_object_to_the_database(data(Organizations,organization_schema))
 
 
 @app.delete("/organizations/delete/{organization_id}",
             tags          = ["🏢 Работа с организациями:"],
             openapi_extra={"descriptions_tag": "organization"},
             description   = organization_dcp.ACT_CREATE.value)
-def delete_organization(organization_id: str):
-    return {"message": "Hello World"}
+async def delete_organization(organization_id: str):
+    return await del_object_to_the_database(Organizations,organization_id)
 
 @app.delete("/buildings/delete/{building_id}",
             tags          = ["🏢 Работа с организациями:"],
             openapi_extra={"descriptions_tag": "organization"},
             description   = organization_dcp.ACT_CREATE.value)
-def delete_build(building_id: str):
-    return {"message": "Hello World"}
+async def delete_build(building_id: str):
+    return await del_object_to_the_database(Organizations,building_id)
 
 @app.delete("/activities/delete/{activity_id}",
             tags          = ["🏢 Работа с организациями:"],
             openapi_extra={"descriptions_tag": "organization"},
             description   = organization_dcp.ACT_CREATE.value)
-def delete_activity(activity_id: str):
-    return {"message": "Hello World"}
+async def delete_activity(activity_id: str):
+    return await del_object_to_the_database(Organizations,activity_id)
 
 
 

@@ -6,6 +6,8 @@ from typing import TYPE_CHECKING
 
 from .base import BASE
 
+from uuid import uuid4
+
 if TYPE_CHECKING:
     from .buildings import Buildings
     from .activities import Activities
@@ -15,7 +17,7 @@ if TYPE_CHECKING:
 class Organizations(BASE):
     __tablename__ = "organizations"
 
-    id            : Mapped[str]   = mapped_column(UUID(as_uuid=True), primary_key=True)
+    id            : Mapped[str]   = mapped_column(UUID(as_uuid=True), primary_key=True,default=uuid4)
     building_id   : Mapped[str]   = mapped_column(ForeignKey("buildings.id"), nullable=False)
     name          : Mapped[str] = mapped_column(nullable=False)
     activity_id   : Mapped[str]   = mapped_column(ForeignKey("activities.id"),nullable=False)

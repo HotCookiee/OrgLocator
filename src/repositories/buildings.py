@@ -1,5 +1,5 @@
-from  db.connection import Database
-from  sqlalchemy.sql import select
+from db.connection import Database
+from sqlalchemy.sql import select
 from models import * 
 from uuid import UUID
 
@@ -11,4 +11,3 @@ async def get_list_organization_by_building(building_id: str):
 
 
 
-        
