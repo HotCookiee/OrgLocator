@@ -18,7 +18,6 @@ class CoordinateScope():
                 ...
 
             del_lat = self.radius / CoordinateScope.ONE_DEGREES_LATITUDE
-            print(del_lat)
             del_lon = (self.radius / (CoordinateScope.ONE_DEGREES_LATITUDE * cos(self.latitude * (pi / 180))))
             
             lat_min = self.latitude - del_lat

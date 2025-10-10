@@ -6,5 +6,6 @@ import os
 load_dotenv()
 
 
-DATABASE_URL = f"postgresql+asyncpg://{os.getenv('POSTGRES_USER',default='postgres')}:{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('HOST',default='localhost')}:{os.getenv('PORT',default='5432')}/{os.getenv('NAME_DB')}"
-
+DATABASE_URL = f"postgresql+asyncpg://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('HOST_DB')}:{os.getenv('PORT_DB')}/{os.getenv('NAME_DB')}"
+JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+ALGORITHM = os.getenv("ALGORITHM")

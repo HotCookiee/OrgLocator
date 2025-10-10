@@ -11,6 +11,8 @@ from uuid import uuid4
 if TYPE_CHECKING:
     from .buildings import Buildings
     from .activities import Activities
+    from .users import Users
+
 
 
 
@@ -25,3 +27,4 @@ class Organizations(BASE):
 
     building      : Mapped["Buildings"]  = relationship(back_populates="organizations")
     activity      : Mapped["Activities"] = relationship(back_populates="organizations")
+    users         : Mapped[list["Users"]] = relationship(back_populates="organizations",cascade="all, delete-orphan",passive_deletes=True)

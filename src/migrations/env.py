@@ -9,7 +9,7 @@ from sqlalchemy import pool
 from alembic import context
 
 from src.core import DATABASE_URL
-from src.models.activities import Activities
+from src.models import Activities, Users, Buildings, Organizations, RefreshTokens
 from src.models.base import BASE
 
 config = context.config
@@ -17,15 +17,14 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-config.set_main_option("sqlalchemy.url",DATABASE_URL + "?async_fallback=True")
+config.set_main_option("sqlalchemy.url", DATABASE_URL + "?async_fallback=True")
 
 
 target_metadata = BASE.metadata
 
 
-
 def run_migrations_offline() -> None:
-    
+
     url = config.get_main_option("sqlalchemy.url")
     context.configure(
         url=url,
@@ -47,9 +46,7 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()

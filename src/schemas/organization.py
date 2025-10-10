@@ -19,6 +19,5 @@ class SelectOrganization(Organization):
 class AddOrganization(Organization):
     building_id   : str   
     activity_id   : str   
-    latitude      : float 
-    longitude     : float 
     created_at    : date  
+    name          : str

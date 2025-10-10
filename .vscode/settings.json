@@ -1,6 +1,7 @@
 {
   "cSpell.words": [
-    "Эндпоинты", 
+    "Эндпоинты",
+    "argon",
     "between",
     "buildings",
     "calculate",
@@ -10,11 +11,16 @@
     "dotenv",
     "downgrade",
     "drop",
+    "expires",
     "generated",
     "latitude",
+    "Lifetime",
     "liveness",
     "longitude",
     "Mapped",
+    "minutes",
+    "Mismatch",
+    "onupdate",
     "pkey",
     "please",
     "populates",
@@ -22,11 +28,18 @@
     "redoc",
     "relationship",
     "Revises",
+    "revoked",
     "scalars",
     "selectinload",
     "selectload",
     "sessionmaker"
   ],
   "cSpell.language": "ru",
-  "commentTranslate.multiLineMerge": true
+  "commentTranslate.multiLineMerge": false,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true,
+    
 }
+}
+
