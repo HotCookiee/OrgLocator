@@ -1,4 +1,4 @@
-from sqlalchemy import UUID, TEXT
+from sqlalchemy import UUID, TEXT, text
 from sqlalchemy.orm import relationship, mapped_column, Mapped
 from typing import TYPE_CHECKING
 
@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 class Activities(BASE):
     __tablename__ = "activities"
 
-    id           : Mapped[str] = mapped_column(UUID(as_uuid=True), primary_key=True,default=uuid4)
+    id           : Mapped[str] = mapped_column(UUID(as_uuid=True), primary_key=True,default=uuid4,server_default=text("gen_random_uuid()"),nullable=True)
     name         : Mapped[str] = mapped_column(TEXT, nullable=False)
 
     organizations: Mapped[list["Organizations"]] = relationship(back_populates="activity")

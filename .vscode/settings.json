@@ -1,6 +1,8 @@
 {
   "cSpell.words": [
     "Эндпоинты",
+    "always",
+    "appendonly",
     "argon",
     "between",
     "buildings",
@@ -13,6 +15,11 @@
     "drop",
     "expires",
     "generated",
+    "healthcheck",
+    "healthy",
+    "interval",
+    "isready",
+    "latest",
     "latitude",
     "Lifetime",
     "liveness",
@@ -27,12 +34,14 @@
     "readiness",
     "redoc",
     "relationship",
+    "retries",
     "Revises",
     "revoked",
     "scalars",
     "selectinload",
     "selectload",
-    "sessionmaker"
+    "sessionmaker",
+    "timeout"
   ],
   "cSpell.language": "ru",
   "commentTranslate.multiLineMerge": false,

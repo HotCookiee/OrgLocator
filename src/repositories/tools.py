@@ -1,13 +1,14 @@
-from db.connection import Database
+from src.db.connection import Database
 from sqlalchemy.sql import select, delete
-from models import *
+from src.models import *
 from uuid import UUID
 from asyncio import sleep
 from functools import wraps
 
 
 def make_query_to_the_database(func):
-    '''Получение сессии базы данных для выполнения запросов к ней'''
+    """Получение сессии базы данных для выполнения запросов к ней"""
+
     @wraps(func)
     async def wrapper(*args, **kwargs):
         async with Database().get_session() as session:

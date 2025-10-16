@@ -1,4 +1,4 @@
-from db.connection import Database
+from src.db.connection import Database
 
 
 async def check_the_database_for_life() -> dict:

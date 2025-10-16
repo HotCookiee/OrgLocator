@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 class RefreshTokens(BASE):
     __tablename__ = "refresh_tokens"
 
-    id            : Mapped[str]   = mapped_column(UUID(as_uuid=True), primary_key=True,default=uuid4)
+    id            : Mapped[str]   = mapped_column(UUID(as_uuid=True), primary_key=True,default=uuid4,server_default=text("gen_random_uuid()"),nullable=True)
     user_id   : Mapped[str]      = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     jti       : Mapped[str]      = mapped_column(unique=True, nullable=False, default=uuid4)
     revoked   : Mapped[bool]     = mapped_column(Boolean, nullable=False, default=False)

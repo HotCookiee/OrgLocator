@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.sql import select
 import os
-from core import DATABASE_URL
+from src.core import DATABASE_URL
 
 
 class Database:

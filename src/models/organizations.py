@@ -1,4 +1,4 @@
-from sqlalchemy import UUID
+from sqlalchemy import UUID, text
 from sqlalchemy.orm import relationship, mapped_column, Mapped
 from sqlalchemy.sql.schema import ForeignKey
 from datetime import date
@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 class Organizations(BASE):
     __tablename__ = "organizations"
 
-    id            : Mapped[str]   = mapped_column(UUID(as_uuid=True), primary_key=True,default=uuid4)
+    id            : Mapped[str]   = mapped_column(UUID(as_uuid=True), primary_key=True,default=uuid4,server_default=text("gen_random_uuid()"),nullable=True)
     building_id   : Mapped[str]   = mapped_column(ForeignKey("buildings.id"), nullable=False)
     name          : Mapped[str] = mapped_column(nullable=False)
     activity_id   : Mapped[str]   = mapped_column(ForeignKey("activities.id"),nullable=False)

@@ -2,6 +2,7 @@ from sqlalchemy import UUID, TEXT
 from sqlalchemy.orm import relationship, mapped_column, Mapped
 from sqlalchemy.sql.schema import ForeignKey
 from datetime import date
+from sqlalchemy import text, func
 from typing import TYPE_CHECKING
 
 
@@ -19,7 +20,7 @@ if TYPE_CHECKING:
 class Users(BASE):
     __tablename__ = "users"
 
-    id: Mapped[str] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    id: Mapped[str] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid4,server_default=text("gen_random_uuid()"),nullable=True)
     name: Mapped[str] = mapped_column(TEXT, nullable=False)
     email: Mapped[str] = mapped_column(nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)

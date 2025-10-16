@@ -1,0 +1,15 @@
+#Git
+.gitattributes
+.gitignore
+
+#read me
+README.md
+README.txt
+README.rst
+
+#Derectories
+__pycache__/
+.venv/
+.vscode/
+
+

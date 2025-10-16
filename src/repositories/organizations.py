@@ -1,7 +1,7 @@
-from db.connection import Database
+from src.db.connection import Database
 from sqlalchemy.sql import select, between
 from sqlalchemy.orm import selectinload
-from models import *
+from src.models import *
 from uuid import UUID
 
 

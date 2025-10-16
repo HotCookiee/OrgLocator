@@ -1,8 +1,8 @@
 from fastapi.routing import APIRouter
 from fastapi import Response, Request, Depends
-from schemas.user import AddUser, UserAuthentication
-from models import Users
-from services.users import (
+from src.schemas.user import AddUser, UserAuthentication
+from src.models import Users
+from src.services.users import (
     user_authentication,
     create_access_token,
     create_refresh_token,
@@ -11,7 +11,7 @@ from services.users import (
     deleted_user_by_user_id,
     access_token_verification,
 )
-from repositories.tools import add_object_to_the_database
+from src.repositories.tools import add_object_to_the_database
 from argon2 import PasswordHasher
 from datetime import timedelta
 

@@ -1,4 +1,4 @@
-from repositories.users import delete_user_by_id, get_user_by_name, verify_password
+from src.repositories.users import delete_user_by_id, get_user_by_name, verify_password
 
 from argon2.exceptions import VerifyMismatchError
 
@@ -6,15 +6,15 @@ from fastapi.exceptions import HTTPException
 from fastapi import status, Request
 
 
-from schemas.user import AddTokenToUser, UserInfo
+from src.schemas.user import AddTokenToUser, UserInfo
 
 from uuid import uuid4
 
 from datetime import datetime, timedelta, timezone
 
-from repositories.users import add_refresh_token, get_jti_by_user_id, get_user_by_id
+from src.repositories.users import add_refresh_token, get_jti_by_user_id, get_user_by_id
 
-from core import JWT_SECRET_KEY, ALGORITHM
+from src.core import JWT_SECRET_KEY, ALGORITHM
 
 import jwt
 

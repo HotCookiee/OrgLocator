@@ -1,4 +1,4 @@
-from sqlalchemy import UUID, TEXT,FLOAT
+from sqlalchemy import UUID, TEXT,FLOAT, text
 from sqlalchemy.orm import relationship, mapped_column, Mapped
 from typing import TYPE_CHECKING
 
@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 class Buildings(BASE):
     __tablename__ = "buildings"
 
-    id            : Mapped[str]   = mapped_column(UUID(as_uuid=True), primary_key=True,default=uuid4)
+    id            : Mapped[str]   = mapped_column(UUID(as_uuid=True), primary_key=True,default=uuid4,server_default=text("gen_random_uuid()"),nullable=True)
     name          : Mapped[str]   = mapped_column(TEXT, nullable=False)
     latitude      : Mapped[float] = mapped_column(FLOAT, nullable=False)
     longitude     : Mapped[float] = mapped_column(FLOAT, nullable=False)

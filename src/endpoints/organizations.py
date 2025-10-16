@@ -1,16 +1,18 @@
 from fastapi import APIRouter, Depends
-from description.organization import HealthDescription as organization_dcp
-from description.selection_by_filter import HealthDescription as selection_by_filter_dcp
-from repositories.tools import (
+from src.description.organization import HealthDescription as organization_dcp
+from src.description.selection_by_filter import (
+    HealthDescription as selection_by_filter_dcp,
+)
+from src.repositories.tools import (
     get_objects_from_database,
     add_object_to_the_database,
     del_object_to_the_database,
 )
-from repositories.organizations import GetInfoFromOrganization
-from models import Organizations
-from schemas.organization import AddOrganization
-from services.organizations import CoordinateScope
-from services.users import access_token_verification
+from src.repositories.organizations import GetInfoFromOrganization
+from src.models import Organizations
+from src.schemas.organization import AddOrganization
+from src.services.organizations import CoordinateScope
+from src.services.users import access_token_verification
 
 
 organization_router = APIRouter()
