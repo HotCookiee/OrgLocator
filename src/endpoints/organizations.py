@@ -1,18 +1,17 @@
+import json
 from fastapi import APIRouter, Depends
 from src.description.organization import HealthDescription as organization_dcp
 from src.description.selection_by_filter import (
     HealthDescription as selection_by_filter_dcp,
 )
-from src.repositories.tools import (
-    get_objects_from_database,
-    add_object_to_the_database,
-    del_object_to_the_database,
-)
+from src.repositories.tools import DataBase, Redis as RedisDB
+
 from src.repositories.organizations import GetInfoFromOrganization
 from src.models import Organizations
-from src.schemas.organization import AddOrganization
+from src.schemas.organization import AddOrganization, SelectOrganization
 from src.services.organizations import CoordinateScope
 from src.services.users import access_token_verification
+from src.services.tools import get_object_from_db_or_cache
 
 
 organization_router = APIRouter()
@@ -25,10 +24,12 @@ organization_router = APIRouter()
     dependencies=[Depends(access_token_verification)],
 )
 async def get_info_organization(organization_id: str):
-    org_inf: Organizations = await get_objects_from_database(
-        Organizations, organization_id
+    obj = await get_object_from_db_or_cache(
+        key=f"organizations_id_{organization_id}",
+        object_model=Organizations,
+        object_schema=SelectOrganization,
     )
-    return org_inf
+    return {"code": 200, "organization_info": obj}
 
 
 @organization_router.post(
@@ -39,7 +40,9 @@ async def get_info_organization(organization_id: str):
 )
 async def create_organization(organization_schema: AddOrganization):
     data = lambda model_object, schema_object: model_object(**schema_object.dict())
-    return await add_object_to_the_database(data(Organizations, organization_schema))
+    return await DataBase.add_object_to_the_database(
+        data(Organizations, organization_schema)
+    )
 
 
 @organization_router.delete(
@@ -49,7 +52,7 @@ async def create_organization(organization_schema: AddOrganization):
     dependencies=[Depends(access_token_verification)],
 )
 async def delete_organization(organization_id: str):
-    return await del_object_to_the_database(Organizations, organization_id)
+    return await DataBase.del_object_to_the_database(Organizations, organization_id)
 
 
 @organization_router.get(

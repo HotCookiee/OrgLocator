@@ -1,6 +1,7 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.sql import select
-import os
+from os import getenv
+import redis.asyncio as redis
 from src.core import DATABASE_URL
 
 
@@ -30,3 +31,26 @@ class Database:
                 return True
             except Exception as e:
                 return False
+
+
+class Redis:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance.redis = redis.Redis(
+                host=getenv("REDIS_HOST"), port=int(getenv("REDIS_PORT"))
+            )
+        return cls._instance
+
+    def get_redis(self):
+        return self.redis
+
+    @property
+    async def is_alive(self) -> bool:
+        try:
+            await self.redis.ping()
+            return True
+        except Exception:
+            return False

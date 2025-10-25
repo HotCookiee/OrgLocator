@@ -5,22 +5,16 @@ from src.services.users import access_token_verification
 
 activity_router = APIRouter()
 
-from uuid import uuid4
-
 
 from src.description.organization import HealthDescription as organization_dcp
 
+from src.repositories.tools import DataBase
 
-from src.repositories.tools import (
-    add_object_to_the_database,
-    del_object_to_the_database,
-)
-from src.repositories.activities import get_list_organization_by_activity
 
 
 from src.models import Activities
 
-from src.schemas.activity import AddActivity
+from src.schemas.activity import AddActivity,SelectActivity
 
 
 @activity_router.get(
@@ -30,7 +24,11 @@ from src.schemas.activity import AddActivity
     dependencies=[Depends(access_token_verification)],
 )
 async def get_list_organization_from_activity(activity_id: str):
-    org_inf: Activities = await get_list_organization_by_activity(activity_id)
+    org_inf: Activities = await DataBase.get_objects_from_database_by_id_or_name(
+        Activities,SelectActivity, activity_id, field="id"
+    )
+
+    # org_inf: Activities = await get_list_organization_by_activity(activity_id)
     return {"code": 200, "list_organizations": org_inf}
 
 
@@ -42,7 +40,9 @@ async def get_list_organization_from_activity(activity_id: str):
 )
 async def create_activity(organization_schema: AddActivity):
     data = lambda model_object, schema_object: model_object(**schema_object.dict())
-    return await add_object_to_the_database(data(AddActivity, organization_schema))
+    return await DataBase.add_object_to_the_database(
+        data(AddActivity, organization_schema)
+    )
 
 
 @activity_router.delete(
@@ -52,4 +52,4 @@ async def create_activity(organization_schema: AddActivity):
     dependencies=[Depends(access_token_verification)],
 )
 async def delete_activity(activity_id: str):
-    return await del_object_to_the_database(AddActivity, activity_id)
+    return await DataBase.del_object_to_the_database(AddActivity, activity_id)

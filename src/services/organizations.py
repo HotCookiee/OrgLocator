@@ -1,10 +1,18 @@
 from math import cos, pi
 from src.repositories.organizations import OrganizationSearchService
+from fastapi import HTTPException, status
+from src.schemas.organization import SelectOrganization
+from src.services.tools import (
+    get_object_from_cache_or_function,
+    convert_list_of_models_to_dict,
+)
+from src.repositories.tools import Redis as RedisDB
+import json
 
 
 class CoordinateScope:
 
-    ONE_DEGREES_LATITUDE: float = 111000
+    ONE_DEGREES_LATITUDE: float = 111_000
 
     def __init__(self, latitude: int, longitude: int, radius: int | None = None):
         self.latitude = latitude
@@ -38,6 +46,13 @@ class CoordinateScope:
         max_lon: float | None = None,
     ):
         search_range: tuple[float, float, float, float] = (..., ..., ..., ...)
+        cache_result = await RedisDB().get_value_by_key(
+            key=f"organizations_geo_{latitude}:{longitude}:{radius}:{min_lat}:{max_lat}:{min_lon}:{max_lon}"
+        )
+
+        if cache_result is not None:
+            print("From cache")
+            return json.loads(cache_result)
 
         if radius is not None and (
             min_lat is not None
@@ -45,9 +60,13 @@ class CoordinateScope:
             or min_lon is not None
             or max_lon is not None
         ):
-            return {"code:": "500", "Message": "error"}
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+                detail="You can't use radius with other parameters",
+                headers={"X-Error": "Use radius or min_lat, max_lat, min_lon, max_lon"},
+            )
 
-        elif radius is not None:
+        if radius is not None:
             search_range = await CoordinateScope(
                 latitude, longitude, radius
             ).calculate_search_area()
@@ -59,6 +78,14 @@ class CoordinateScope:
             await OrganizationSearchService.get_list_organizations_in_the_range(
                 *search_range
             )
+        )
+        dict_organizations = convert_list_of_models_to_dict(
+            list_organization_by_filter, SelectOrganization
+        )
+
+        await RedisDB().set_value_by_key(
+            key=f"organizations_geo_{latitude}:{longitude}:{radius}:{min_lat}:{max_lat}:{min_lon}:{max_lon}",
+            value=json.dumps(dict_organizations, default=str),
         )
 
         return list_organization_by_filter

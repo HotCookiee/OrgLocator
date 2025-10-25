@@ -15,18 +15,22 @@ services:
       POSTGRES_DB: ${NAME_DB}
     ports:
       - "5432:5432"
+    networks:
+      - pg_network
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
   redis:
     image: redis:latest
-    container_name: redis_cache
+    container_name: ${REDIS_HOST}
     depends_on:
       postgres:
         condition: service_healthy
     command: ["redis-server", "--port", "${REDIS_PORT}", "--appendonly", "yes"]
     ports:
       - "${REDIS_PORT}:6379"
+    networks:
+      - redis_network
     volumes:
       - redis_data:/data
   app:
@@ -38,7 +42,7 @@ services:
       postgres:
         condition: service_healthy
       redis:
-        condition: service_healthy
+        condition: service_started 
     restart: always
     ports: 
       - "8000:8000"
@@ -53,6 +57,14 @@ services:
       REDIS_HOST: ${REDIS_HOST}
       REDIS_PORT: ${REDIS_PORT}
 
+    networks:
+      - redis_network
+      - pg_network
+
 volumes:
   postgres_data:
   redis_data:
+
+networks:
+  pg_network:
+  redis_network:

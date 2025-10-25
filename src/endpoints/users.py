@@ -1,3 +1,4 @@
+import logging
 from fastapi.routing import APIRouter
 from fastapi import Response, Request, Depends
 from src.schemas.user import AddUser, UserAuthentication
@@ -11,7 +12,7 @@ from src.services.users import (
     deleted_user_by_user_id,
     access_token_verification,
 )
-from src.repositories.tools import add_object_to_the_database
+from src.repositories.tools import DataBase
 from argon2 import PasswordHasher
 from datetime import timedelta
 
@@ -24,7 +25,7 @@ ph = PasswordHasher()
 async def reg_user(user_schema: AddUser):
     user_schema.password = ph.hash(user_schema.password)
     data = lambda model_object, schema_object: model_object(**schema_object.dict())
-    return await add_object_to_the_database(data(Users, user_schema))
+    return await DataBase.add_object_to_the_database(data(Users, user_schema))
 
 
 @user_router.post("/login")

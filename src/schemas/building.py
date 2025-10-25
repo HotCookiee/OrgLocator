@@ -1,4 +1,4 @@
-from pydantic import BaseModel,Field
+from pydantic import BaseModel, ConfigDict,Field
 from uuid import UUID
 from typing import Optional
 
@@ -7,6 +7,7 @@ class Building(BaseModel):
 
 
 class SelectBuilding(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     id: Optional[UUID] = None  
     name          : str 
     latitude      : float 

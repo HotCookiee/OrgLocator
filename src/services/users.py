@@ -1,3 +1,5 @@
+from src.models.users import Users
+from src.schemas.user import AddUser
 from src.repositories.users import delete_user_by_id, get_user_by_name, verify_password
 
 from argon2.exceptions import VerifyMismatchError
@@ -18,9 +20,15 @@ from src.core import JWT_SECRET_KEY, ALGORITHM
 
 import jwt
 
+from src.repositories.tools import DataBase
+
 
 async def user_authentication(auth_user_schema) -> UserInfo:
-    user = await get_user_by_name(auth_user_schema.name)
+    user = await DataBase.get_objects_from_database_by_id_or_name(
+        Users, AddUser, auth_user_schema.name, field="name"
+    )
+
+    # user = await get_user_by_name(auth_user_schema.name)
 
     if user is None:
         raise HTTPException(
@@ -36,8 +44,9 @@ async def user_authentication(auth_user_schema) -> UserInfo:
         )
 
 
+#!Изменить время жизни токена на 30 минут minutes=30
 def create_access_token(
-    user_info: UserInfo, lifetime: timedelta = timedelta(minutes=30)
+    user_info: UserInfo, lifetime: timedelta = timedelta(hours=24)
 ) -> str:
     now = datetime.now(timezone.utc)
     expire = now + lifetime
