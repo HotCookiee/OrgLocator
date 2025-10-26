@@ -28,7 +28,6 @@ async def get_list_organization_from_activity(activity_id: str):
         Activities,SelectActivity, activity_id, field="id"
     )
 
-    # org_inf: Activities = await get_list_organization_by_activity(activity_id)
     return {"code": 200, "list_organizations": org_inf}
 
 

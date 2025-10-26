@@ -21,7 +21,6 @@ class DataBase:
 
         return wrapper
 
-    #!Сделать что бы если нет данных они добовлялись в redis
     @make_query_to_the_database
     async def get_objects_from_database_by_id_or_name(
         object_table,

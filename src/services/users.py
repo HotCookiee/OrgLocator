@@ -28,8 +28,6 @@ async def user_authentication(auth_user_schema) -> UserInfo:
         Users, AddUser, auth_user_schema.name, field="name"
     )
 
-    # user = await get_user_by_name(auth_user_schema.name)
-
     if user is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Пользователь не найден"
