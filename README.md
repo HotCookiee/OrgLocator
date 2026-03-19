@@ -1,4 +1,4 @@
-# 🌍 GeoOrg
+# 🌍 OrgLocator
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.117.1-009688?style=flat-square&logo=fastapi&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0.43-D71F00?style=flat-square&logo=sqlalchemy&logoColor=white)
@@ -35,7 +35,7 @@
 
 ## 🎯 О проекте
 
-**GeoOrg** — современный асинхронный веб-сервис на FastAPI для управления организациями с акцентом на геопространственный поиск.
+**OrgLocator** — современный асинхронный веб-сервис на FastAPI для управления организациями с акцентом на геопространственный поиск.
 
 ### Ключевые особенности
 
@@ -111,8 +111,8 @@
 
 ```bash
 # 1. Клонируйте репозиторий
-git clone https://github.com/HotCookiee/GeoOrg.git
-cd GeoOrg
+git clone https://github.com/HotCookiee/OrgLocator.git
+cd OrgLocator
 
 # 2. Заполните .env файл
 cat > .env << EOF
@@ -212,7 +212,7 @@ GET /organizations/search/geo?min_lat=55.0&max_lat=56.0&min_lon=37.0&max_lon=38.
 ## 📁 Структура проекта
 
 ```
-GeoOrg/
+OrgLocator/
 │
 ├── 📄 .dockerignore
 ├── 📄 .env
@@ -399,8 +399,8 @@ docker compose down
 ## 📧 Контакты
 
 **Автор**: [@HotCookiee](https://github.com/HotCookiee)
-**Репозиторий**: [GeoOrg](https://github.com/HotCookiee/GeoOrg)
-**Issues**: [Сообщить о проблеме](https://github.com/HotCookiee/GeoOrg/issues)
+**Репозиторий**: [OrgLocator](https://github.com/HotCookiee/OrgLocator)
+**Issues**: [Сообщить о проблеме](https://github.com/HotCookiee/OrgLocator/issues)
 
 ---
 
